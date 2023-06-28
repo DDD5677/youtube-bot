@@ -32,7 +32,7 @@ bot.on("message", async (ctx) => {
          const video_title = info.videoDetails.title;
          console.log(video_title);
          const stream = ytdl(ctx.message.text, { quality: "highest" });
-         stream.pipe(fs.createWriteStream(`videos/video-${randomName}.mp4`));
+         stream.pipe(fs.createWriteStream(`video-${randomName}.mp4`));
          stream.once("response", () => {
             ctx.reply("Yuklash boshlandi.");
          });
@@ -53,12 +53,12 @@ bot.on("message", async (ctx) => {
          stream.on("end", async () => {
             ctx.reply(`Video ${video_title} jo'natilmoqda`);
             await ctx.replyWithVideo({
-               source: `videos/video-${randomName}.mp4`,
+               source: `video-${randomName}.mp4`,
             });
             ctx.state.finished = true;
             if (ctx.state.finished) {
                console.log("deleting file");
-               fs.unlink(`./videos/video-${randomName}.mp4`, (err) => {
+               fs.unlink(`video-${randomName}.mp4`, (err) => {
                   if (err) {
                      // File deletion failed
                      console.error(err.message);
