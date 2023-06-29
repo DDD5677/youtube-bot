@@ -3,7 +3,7 @@ const app = require("express")();
 const fileupload = require("express-fileupload");
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
-const fs = require("@cyclic.sh/s3fs");
+const fs = require("@cyclic.sh/s3fs")(S3_BUCKET_NAME);
 const ytdl = require("ytdl-core");
 const helpMessage = `
 /start - Botga start berish
