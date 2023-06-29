@@ -76,4 +76,9 @@ bot.on("message", async (ctx) => {
       console.log(e);
    }
 });
-bot.launch();
+bot.launch({
+   webhook: {
+      domain: "https://worried-tights-crow.cyclic.app",
+      port: 3000,
+   },
+});
