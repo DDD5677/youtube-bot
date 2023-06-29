@@ -53,21 +53,25 @@ bot.on("message", async (ctx) => {
          });
 
          stream.on("end", async () => {
-            ctx.reply(`Video ${video_title} jo'natilmoqda`);
-            await ctx.replyWithVideo({
-               source: `video-${randomName}.mp4`,
-            });
-            ctx.state.finished = true;
-            if (ctx.state.finished) {
-               console.log("deleting file");
-               fs.unlink(`video-${randomName}.mp4`, (err) => {
-                  if (err) {
-                     // File deletion failed
-                     console.error(err.message);
-                     return;
-                  }
-                  console.log("File deleted successfully");
+            try {
+               ctx.reply(`Video ${video_title} jo'natilmoqda`);
+               await ctx.replyWithVideo({
+                  source: `video-${randomName}.mp4`,
                });
+               ctx.state.finished = true;
+               if (ctx.state.finished) {
+                  console.log("deleting file");
+                  fs.unlink(`video-${randomName}.mp4`, (err) => {
+                     if (err) {
+                        // File deletion failed
+                        console.error(err.message);
+                        return;
+                     }
+                     console.log("File deleted successfully");
+                  });
+               }
+            } catch (e) {
+               console.log(e);
             }
          });
       } else {
