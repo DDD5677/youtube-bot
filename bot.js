@@ -2,7 +2,6 @@ const { Telegraf } = require("telegraf");
 const express = require("express");
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
-const bot = new Telegraf(TOKEN);
 const fs = require("fs");
 const ytdl = require("ytdl-core");
 const helpMessage = `
@@ -10,6 +9,8 @@ const helpMessage = `
 /help - buyruqlar ro'yhati 
 Bizning telegram kanal https://t.me/soul_channels`;
 let oneTimes = false;
+
+const bot = new Telegraf(TOKEN);
 
 const randomName = Math.floor(Math.random() * 100);
 bot.start((ctx) => {
@@ -76,9 +77,18 @@ bot.on("message", async (ctx) => {
       console.log(e);
    }
 });
-bot.launch({
-   webhook: {
-      domain: "https://worried-tights-crow.cyclic.app",
-      port: 3000,
-   },
-});
+if (process.env.NODE_ENV == "production") {
+   bot.launch({
+      webhook: {
+         domain: process.env.CYCLIC_URL, // Your domain URL (where server code will be deployed)
+         port: process.env.PORT || 8000,
+      },
+   }).then(() => {
+      console.info(`The bot ${bot.botInfo.username} is running on server`);
+   });
+} else {
+   // if local use Long-polling
+   bot.launch().then(() => {
+      console.info(`The bot ${bot.botInfo.username} is running locally`);
+   });
+}
