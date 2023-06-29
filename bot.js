@@ -1,5 +1,5 @@
 const { Telegraf } = require("telegraf");
-const express = require("express");
+const app = require("express")();
 const fileupload = require("express-fileupload");
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
