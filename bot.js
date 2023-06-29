@@ -70,24 +70,10 @@ bot.on("message", async (ctx) => {
             }
          });
       } else {
-         ctx.reply("Iltimos youtube linkni tekshirib qaytadan yuboring!");
+         ctx.reply("Iltimos youtube linkni tekshirib qaytadan yuboring");
       }
    } catch (e) {
       console.log(e);
    }
 });
-if (process.env.NODE_ENV === "production") {
-   // Use Webhooks for the production server
-   const app = express();
-   app.use(express.json());
-   app.use(webhookCallback(bot, "express"));
-
-   const PORT = process.env.PORT || 3000;
-   app.listen(PORT, () => {
-      console.log(`Bot listening on port ${PORT}`);
-   });
-} else {
-   // Use Long Polling for development
-   bot.start();
-}
 bot.launch();
