@@ -3,7 +3,7 @@ const app = require("express")();
 const fileupload = require("express-fileupload");
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
-const fs = require("@cyclic.sh/s3fs")(S3_BUCKET_NAME);
+const fs = require("fs");
 const ytdl = require("ytdl-core");
 const helpMessage = `
 /start - Botga start berish
@@ -19,9 +19,9 @@ app.use(
    })
 );
 const randomName = Math.floor(Math.random() * 100);
-bot.start((ctx) => {
+bot.start(async (ctx) => {
    const full_name = ctx.message.from.first_name;
-   ctx.reply(
+   await ctx.reply(
       `Assalomu alaykum <b>${full_name}</b> botimizga xush kelibsiz. Botga youtube link yuboring men yuklab beraman.`,
       {
          parse_mode: "HTML",
