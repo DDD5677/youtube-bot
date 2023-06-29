@@ -1,5 +1,6 @@
 const { Telegraf } = require("telegraf");
 const express = require("express");
+const fileupload = require("express-fileupload");
 require("dotenv").config();
 const TOKEN = process.env.BOT_TOKEN;
 const fs = require("fs");
@@ -11,7 +12,12 @@ Bizning telegram kanal https://t.me/soul_channels`;
 let oneTimes = false;
 
 const bot = new Telegraf(TOKEN);
-
+app.use(
+   fileupload({
+      useTempFiles: true,
+      tempFileDir: "/tmp",
+   })
+);
 const randomName = Math.floor(Math.random() * 100);
 bot.start((ctx) => {
    const full_name = ctx.message.from.first_name;
